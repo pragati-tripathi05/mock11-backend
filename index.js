@@ -1,13 +1,10 @@
 const express = require("express");
 const connection = require("./Config/db");
 require("dotenv").config();
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const PORT = process.env.PORT || 8080;
 const cors = require("cors");
 
 const authentication = require("./Middlewares/Authentication");
-const { User } = require("./Models/user.model");
 const { userSignup, userLogin } = require("./Controllers/user.controller");
 const { dashboard } = require("./Controllers/dashboard.controller");
 
@@ -22,9 +19,9 @@ app.get("/", (req, res) => {
 
 app.post("/signup", userSignup);
 
-app.post("/login", userLogin);
+app.post("/login", cors(), userLogin);
 
-app.get("/dashboard", authentication, dashboard);
+app.get("/dashboard", cors(), authentication, dashboard);
 
 app.listen(PORT, async () => {
   try {
