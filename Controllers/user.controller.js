@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const userSignup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
   const existing = await User.findOne({ email });
   if (existing) {
     res.send("User already exists");
@@ -12,7 +12,7 @@ const userSignup = async (req, res) => {
       if (err) {
         res.send("Something went wrong, please signup later");
       } else {
-        const user = new User({ name, email, password: hash });
+        const user = new User({ email, password: hash });
         await user.save();
         res.send("User SignUp Successful");
       }
